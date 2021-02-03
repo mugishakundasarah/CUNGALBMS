@@ -18,6 +18,7 @@ app.use('/docs', (req, res)=>{
 });
 app.use('/docType', docTypeRoutes)
 app.use('/notes', notesRoutes)
+app.use('/docType/docs/')
 require('./models/db');
 app.listen(process.env.PORT, ()=>{
     console.log(`Listening on port ${process.env.PORT}`);
