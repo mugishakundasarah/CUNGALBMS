@@ -5,6 +5,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const { docTypeRoutes } = require('./routes/docType.routes');
 const { notesRoutes } = require('./routes/Notes/note.route');
+const { bookRoutes } = require('./routes/Documents/Books/book.route');
 dotenv.config()
 
 app.use(bodyParser.json({
@@ -18,7 +19,7 @@ app.use('/docs', (req, res)=>{
 });
 app.use('/docType', docTypeRoutes)
 app.use('/notes', notesRoutes)
-app.use('/docType/docs/')
+app.use('/books/', bookRoutes)
 require('./models/db');
 app.listen(process.env.PORT, ()=>{
     console.log(`Listening on port ${process.env.PORT}`);

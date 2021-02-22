@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const paginate = require('mongoose-paginate-v2');
 const Joi = require('joi');
-const date = require('date-and-time')
+const docTypeSchemaModel = require('./../../docType.model')
 
 const bookModel = new mongoose.Schema({
     title:{
@@ -9,25 +9,27 @@ const bookModel = new mongoose.Schema({
         required:true
     },
     total:{
-        type: Number
+        type: String,
+        required:true
     }, 
     dateOfRecipient:{
         type: Date,
         required:false
      },
      unitPrice:{
-        type: Number
+        type: String
      },
-     publisher:{
-         name:String,
-         required:true
+     publisher: {
+         type: String,
+         required: true
      },
     publishingDate:{
         type: Date
     },
-    category:{
-        type:String,
-        required:true
+    category_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "docTypeSchema",
+        required: true
     },
     status:{
         type:'String',
@@ -43,10 +45,11 @@ exports.bookValidate = (book)=>{
         title:Joi.string().required(),
         total:Joi.number().required(),
         dateOfRecipient: Joi.date(),
-        unitPrice:Joi.number(),
+        unitPrice:Joi.string(),
         publisher:Joi.string(),
         publishingDate:Joi.date(),
-        category:Joi.string().required(),
+        category_id:Joi.string().required(),
         status:Joi.string().required().valid('Kept','At risk', 'Lost')
     })
+    return books.validate(book);
 }
