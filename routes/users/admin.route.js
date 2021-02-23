@@ -43,6 +43,8 @@ adminRoutes.route("/account")
  *     tags:
  *       - Admin
  *     description: get admin account credentials from the database
+ *     security:
+ *        - bearerAuth: -[]
  *     parameters:
  *       - name: page
  *         description: page number

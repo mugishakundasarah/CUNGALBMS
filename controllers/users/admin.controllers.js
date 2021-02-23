@@ -62,7 +62,7 @@ module.exports.createAdmin = async (req, res) => {
             })
         })
     } catch (error) {
-        res.send(formatResult({message: "failed to create admin", data: error.toString()}))
+        return res.send(formatResult({message: "failed to create admin", data: error.toString()}))
     }  
 }
 

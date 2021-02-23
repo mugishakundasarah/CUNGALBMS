@@ -8,19 +8,16 @@ exports.addStudent = async (req, res) => {
         if(error)
             return res.send(formatResult({status: 400, message: error.details[0].message}))   
 
-        const duplicate = await studentsSchema.findOne({$where: {}})
-        
-        // check if there is a duplicate 
-        
-        
-        // const duplicate = await studentsSchema.findOne({_id: {$ne : req.params.id}}, {firstName: req.body.firstName , lastName: req.body.lastName})
-        // if(duplicate)
-        //     return res.send(formatResult({message: "student already registered"}))        
+       const {firstName, lastName, gender, Class} = req.body.toUpperCase()
+
+        // check if the student exits in db
+        const duplicate = await studentsSchema.findOne(req.body)
+         if(duplicate)
+             return res.send(formatResult({message: "student already registered"}))        
         
         const newStudent = new studentsSchema(req.body);
         const result = await newStudent.save();
         return res.send(formatResult({status: 201, data: result, message: "saved student to db"}))
-        
     } catch (error) {
         return res.send(formatResult({status: 500,message: error}))
     }  
@@ -32,13 +29,11 @@ exports.getStudents = async (req,res) => {
             page: req.query.page || 1,
             limit: req.query.limit || 10
         }
-
-        //const result = await studentsSchema.paginate({}, options)
         const result = await studentsSchema.paginate({}, options)
         return res.send(formatResult({data: result}))
 
     } catch (error) {
-        return res.send(error)
+        return res.send(formatResult({message: error}))
     }
 }
 
@@ -61,25 +56,22 @@ exports.updateStudent = async (req, res) => {
 
         if (duplicate) return res.send(formatResult({ status: 409, message: 'student already in db' }));
         
-        
-        const result = 
-            await studentsSchema.findByIdAndUpdate(req.params.id, {
-        })
+        const result = await studentsSchema.findByIdAndUpdate(req.params.id, req.body)
 
-        res.send(formatResult({status: 200, message: "UPDATED", data: result}))
+        return res.send(formatResult({status: 200, message: "UPDATED", data: result}))
     } catch (error) {
-        res.send(formatResult({status: 500,message: error}))   
+        return res.send(formatResult({status: 500,message: error}))   
     }       
 } 
 
 module.exports.deleteStudent = async(req, res) => {
     try {
-        // check if the id is in the db
+        // check if the id is in  db
         if (!validateObjectId(req.params.id))
             return res.send(formatResult({ status: 400, message: 'invalid id' }))
 
         // delete user if found
-        const result = await studentsSchema.findOneAndDelete({ _id: req.params.id })
+        const result = await studentsSchema.findByIdAndDelete(req.params.id)
         if (!result)
             return res.send(formatResult({ status: 404, message: 'reader not yet created' }));       
         return res.send(formatResult({ status: 200, message: 'DELETED' }));

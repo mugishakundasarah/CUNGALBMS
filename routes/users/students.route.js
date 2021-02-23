@@ -112,7 +112,7 @@ studentRoutes.route('/:id')
  *          
  *     responses: 
  *       200: 
- *         description: OK,reader updated
+ *         description: OK,reader deleted
  *        
  */
  .delete(deleteStudent)

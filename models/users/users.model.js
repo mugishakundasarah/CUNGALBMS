@@ -25,7 +25,8 @@ const validateStudent = Joi.object().keys({
 
 const staff = new mongoose.Schema({
     email : {type: String, required: true},
-    names: {type: String, required: true},
+    firstName: {type: String, required: true},
+    lastName: {type: String, required: true},
     duty: {type: String}
 })
 staff.plugin(paginate)
@@ -35,7 +36,8 @@ const staffSchema = mongoose.model("Staff",staff);
 //configuring joi for user students validation
 const validateStaff = Joi.object().keys({
     email: Joi.string().email().required(),
-    names: Joi.string().required(),
+    firstName: Joi.string().required(),
+    lastName : Joi.string().required(),
     duty: Joi.string()
 })
 
