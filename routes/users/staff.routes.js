@@ -1,6 +1,7 @@
 const express = require("express")
 const { addStaff, updateStaff, deleteStaff, getStaff } = require("../../controllers/users/staff.controller")
 const staffRoutes = express.Router()
+const {verifyToken} = require("../../utils/checkAuth")
 
 staffRoutes.route('/')
    /**
@@ -33,7 +34,7 @@ staffRoutes.route('/')
      *         description: OK
      */
  
-.post(addStaff)
+.post(verifyToken,addStaff)
 /**
  * @swagger
  * /staff/:
@@ -54,7 +55,7 @@ staffRoutes.route('/')
  *       200:
  *         description: OK
  */
-.get(getStaff)
+.get(verifyToken,getStaff)
 
 staffRoutes.route('/:id')
 /**
@@ -91,7 +92,7 @@ staffRoutes.route('/:id')
 *       200:
 *         description: OK
 */
-.put(updateStaff)
+.put(verifyToken,updateStaff)
 
 /**
  * @swagger
@@ -113,7 +114,7 @@ staffRoutes.route('/:id')
  *         description: OK,reader deleted
  *        
  */
- .delete(deleteStaff)
+ .delete(verifyToken,deleteStaff)
 
 module.exports.staffRoutes = staffRoutes;
 

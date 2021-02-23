@@ -7,7 +7,7 @@ const studentsData = new mongoose.Schema({
     firstName: {type: String, required: true}, 
     lastName : {type: String, required: true},
     gender: {type: String},
-    class: {type: String}
+    Class: {type: String}
 }, {timestamps : true})
 
 studentsData.plugin(paginate)
@@ -19,7 +19,7 @@ const validateStudent = Joi.object().keys({
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     gender: Joi.string().valid("male", "female"),
-    class: Joi.string()
+    Class: Joi.string()
 })
 
 

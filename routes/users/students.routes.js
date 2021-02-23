@@ -1,7 +1,6 @@
 const express = require("express")
 const { addStudent, updateStudent, deleteStudent, getStudents, getStudentByClass } = require("../../controllers/users/user.controller")
 const studentRoutes = express.Router()
-const classRoutes = express.Router()
 
 studentRoutes.route('/')
    /**
@@ -16,7 +15,7 @@ studentRoutes.route('/')
      *         description: Fields for student
      *         in: body
      *         required: true
-     *         schema: 
+     *         schema:
      *           type: object
      *           properties: 
      *             firstName:
@@ -28,7 +27,7 @@ studentRoutes.route('/')
      *             gender:
      *               type: string
      *               description: student's gender("female, male")
-     *             class: 
+     *             Class: 
      *               type: string
      *               description: student's class
      *     responses:
@@ -77,7 +76,7 @@ studentRoutes.route('/:id')
 *         description: Fields for student
 *         in: body
 *         required: true
-*         Schema: 
+*         schema: 
 *           type: object
 *           properties: 
 *             firstName:
@@ -89,6 +88,8 @@ studentRoutes.route('/:id')
 *             gender:
 *               type: string
 *               description: student's gender("female, male")
+*             Class:
+*                type: string
 *     responses:
 *       200:
 *         description: OK

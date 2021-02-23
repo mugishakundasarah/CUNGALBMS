@@ -1,5 +1,5 @@
 const { validateStudent, studentsSchema } = require("../../models/users/users.model");
-const { formatResult } = require("../../utils/import");
+const { formatResult,validateObjectId } = require("../../utils/import");
 
 exports.addStudent = async (req, res) => {
     try {
@@ -8,10 +8,10 @@ exports.addStudent = async (req, res) => {
         if(error)
             return res.send(formatResult({status: 400, message: error.details[0].message}))   
 
-       const {firstName, lastName, gender, Class} = req.body.toUpperCase()
+       const {firstName, lastName, gender, Class} = req.body
 
         // check if the student exits in db
-        const duplicate = await studentsSchema.findOne(req.body)
+        const duplicate = await studentsSchema.findOne({firstName: firstName.toUpperCase(), lastName: lastName.toUpperCase(), gender:gender.toUpperCase(), Class: Class.toUpperCase()})
          if(duplicate)
              return res.send(formatResult({message: "student already registered"}))        
         
@@ -30,10 +30,10 @@ exports.getStudents = async (req,res) => {
             limit: req.query.limit || 10
         }
         const result = await studentsSchema.paginate({}, options)
-        return res.send(formatResult({data: result}))
+        return res.send(result)
 
     } catch (error) {
-        return res.send(formatResult({message: error}))
+        return res.send(error).status(500)
     }
 }
 
@@ -47,7 +47,7 @@ exports.updateStudent = async (req, res) => {
 
         const duplicate = await studentsSchema.findOne({
             _id: {
-                $ne: id
+                $ne: req.params.id
             },
             firstName : req.body.firstName,
             lastName : req.body.lastName,
