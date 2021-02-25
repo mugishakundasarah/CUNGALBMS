@@ -10,6 +10,9 @@ const { studentRoutes } = require("./routes/users/students.routes")
 const {staffRoutes} = require("./routes/users/staff.routes")
 const PORT = process.env.PORT || 5000
 const host = process.env.NODE_ENV === "production" ? process.env.PROD_HOST : `localhost:${PORT}`
+const cors = require("cors")
+
+app.use(cors())
 
 
 const options = {
