@@ -18,7 +18,7 @@ const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerOptions = {
     swaggerDefinition:{
         info:{
-            title:"CUNGA LMS",
+            title:"CUNGA LBMS",
             description:"A digitizing library management system"
         }, 
         servers: ["localhost:8400"]
