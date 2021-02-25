@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const paginate = require('mongoose-paginate-v2');
 const Joi = require('joi');
-const docTypeSchemaModel = require('./../../docType.model')
+const docTypeSchemaModel = require('../../document_types/docType.model')
 
 const bookModel = new mongoose.Schema({
     title:{

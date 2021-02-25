@@ -1,5 +1,5 @@
 const express=require('express');
-const { postDocTypes, getAllDocTypes, updateDocType, deleteDocType, getDocTypeById } = require('../controllers/docType.controller');
+const { postDocTypes, getAllDocTypes, updateDocType, deleteDocType, getDocTypeById } = require('../../controllers/document_types/docType.controller');
 const router = express.Router();
 
 router.route('/').post(postDocTypes).get(getAllDocTypes)

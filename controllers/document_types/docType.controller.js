@@ -1,6 +1,6 @@
 const { valid } = require("joi");
-const { docTypeSchemaModel, docTypeValidate } = require("../models/docType.model");
-const { validateObjectid, formatResult } = require("../utils/import");
+const { docTypeSchemaModel, docTypeValidate } = require("../../models/document_types/docType.model");
+const { validateObjectid, formatResult } = require("../../utils/import");
 
 exports.postDocTypes = async (req, res) => {
     try {

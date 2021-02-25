@@ -1,7 +1,5 @@
-const { format } = require("date-and-time")
-const { valid } = require("joi")
 const { bookSchema, bookValidate } = require("../../../models/Documents/Books/book.model")
-const { docTypeSchemaModel } = require("../../../models/docType.model")
+const { docTypeSchemaModel } = require("../../../models/document_types/docType.model")
 const { formatResult } = require("../../../utils/import")
 
 exports.postBooks = async (req, res) => {
@@ -34,6 +32,34 @@ exports.updateBook = async (req, res) => {
         const result = await updatedBook.save()
         return res.send(formatResult({ status: 200, message: "Successfully updated", data: result }))
     } catch (err) {
-        res.send(formatResult({ status: 400, message: "Couldn't updated", data: err }))
+        return res.send(formatResult({ status: 400, message: "Couldn't updated", data: err }))
     }
 }
+
+exports.deleteBook = async (req, res)=>{
+    try {
+        const id = req.params.id
+        const result = await bookSchema.findByIdAndDelete({_id:id})
+        return res.send(formatResult({ status: 200, message: "Book deleted", data: result }))
+
+    } catch (err) {
+        return res.send(formatResult({ status: 400, message: "Couldn't delete", data: err }))
+    }
+}
+
+exports.getAllBooks = async (req, res)=>{
+    try {
+        const result = await bookSchema.find()
+        if(result) res.send(formatResult({ status: 200, data: result }))
+        else{
+            res.send(formatResult({ status: 404, message: "No books created yet" }))
+            this.postBooks();
+        }
+        
+    } catch (err) {
+        res.send(formatResult({ status: 404, message: "Couldn't find", data: err }))
+    }
+}
+
+//let's first start with document type swagger
+//exports.getBookById
