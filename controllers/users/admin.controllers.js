@@ -20,6 +20,7 @@ module.exports.createAdmin = async (req, res) => {
 
         //configure validation by email checking and sending confirmation code
         let code = Math.floor(Math.random() * 1000000) + 1
+        let linkCode = `<a>${code}</a>`
         let signUpConfirmationMessage = {
             from: "mugishakundasarah@gmail.com",
             to: email,
