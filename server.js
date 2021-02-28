@@ -5,7 +5,7 @@ dotenv.config({path: ".env"})
 const swaggerJsDoc = require("swagger-jsdoc")
 const swaggerUi = require("swagger-ui-express")
 const { mongoConnect } = require("./models/connection")
-const { adminRoutes } = require("./routes/users/admin.route")
+const { adminRoutes } = require("./routes/users/admin.routes")
 const { studentRoutes } = require("./routes/users/students.routes")
 const {staffRoutes} = require("./routes/users/staff.routes")
 const PORT = process.env.PORT || 5000

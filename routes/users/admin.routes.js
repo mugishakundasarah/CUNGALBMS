@@ -15,7 +15,6 @@ adminRoutes.route("/account")
   *         description: fields for admin routes
   *         in: body
   *         schema: 
-  * 
   *           type: object
   *           properties: 
   *             userName: 
