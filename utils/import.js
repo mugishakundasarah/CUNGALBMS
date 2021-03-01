@@ -1,21 +1,22 @@
-const mongoose = require('mongoose');
-/***
- * @param id
- * @returns boolean true/false
+const mongoose = require("mongoose")
+/**
+ * @param {String} 
+ * @returns {Boolean} true/false
  */
-exports.validateObjectid = (id) => mongoose.Types.ObjectId.isValid(id);
 
-/***
+exports.validateObjectId = (id) => mongoose.Types.ObjectId.isValid(id)
+
+/**
  * @param status
  * @param message
  * @param data
- * @returns {{status:number, message:string, data:*}}
+ * @returns {{data: *, message: string, status: number}}
  */
 
- exports.formatResult = ({status=200, message="Ok", data})=>{
-     return({
-         status:status,
-         message:message,
-         data:data
-     })
+ exports.formatResult = ({status, message, data}) => {
+     return {
+        status,
+        message: message.toString().split('"').join(""),
+        data      
+    }
  }

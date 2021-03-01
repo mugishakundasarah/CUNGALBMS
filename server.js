@@ -1,26 +1,28 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
 const { docTypeRoutes } = require('./routes/document_types/docType.routes');
 const { noteRoutes } = require('./routes/Notes/note.route');
 const { bookRoutes } = require('./routes/Documents/Books/book.route');
+const dotenv = require("dotenv")
+dotenv.config({path: ".env"})
+const swaggerJsDoc = require("swagger-jsdoc")
+const swaggerUi = require("swagger-ui-express")
 const { mongoConnect } = require("./models/connection")
 const { adminRoutes } = require("./routes/users/admin.routes")
 const { studentRoutes } = require("./routes/users/students.routes")
 const {staffRoutes} = require("./routes/users/staff.routes")
-
-dotenv.config()
 const PORT = process.env.PORT || 5000
-const cors = require('cors');
+
+// const host = 
+// process.env.NODE_ENV = 'PRODUCTION' ? process.env.PROD_HOST: `localhost:${PORT}`
+
+const host = process.env.NODE_ENV === "production" ? process.env.PROD_HOST : `localhost:${PORT}`
+const cors = require("cors")
 
 app.use(cors())
 
-const host = 
-process.env.NODE_ENV = 'PRODUCTION' ? process.env.PROD_HOST: `localhost:${PORT}`
 
-const swaggerUi = require('swagger-ui-express')
-const swaggerJsDoc = require('swagger-jsdoc')
 const options = {
     swaggerDefinition : {
         info : {
