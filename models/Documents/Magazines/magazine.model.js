@@ -21,8 +21,8 @@ recordingDate:{
     required:true
 },
 category:{
-    type:'String',
-    _id:docTypeSchemaModel.findById({_id:id}),
+    type:mongoose.Schema.Types.ObjectId,
+    ref:docTypeSchemaModel,
     required:true
 }
 }).plugin(paginate)
@@ -34,7 +34,7 @@ exports.magazineValidate = (magazine)=>{
         total: Joi.required().string(),
         publisher: Joi.string().required(),
         recordingDate: Joi.date().required(),
-        category: Joi.required().valid({_id:docTypeSchemaModel.findById({_id:id})})
+        category: Joi.valid(docTypeSchemaModel.findOne({_id:category})).required()
     })
     return magazines.validate(magazine)
 }
