@@ -13,8 +13,7 @@ const bookModel = new mongoose.Schema({
         required:true
     }, 
     dateOfRecipient:{
-        type: Date,
-        required:false
+        type: new Date(),
      },
      unitPrice:{
         type: String
