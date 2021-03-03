@@ -3,8 +3,8 @@ const { postBooks, getAllBooks, updateBook, deleteBook } = require('../../../con
 const router = require('express').Router()
 router.route('/')
 /**
- * /books/:
  * @swagger
+ * /books/:
  *   post:
  *     tags:
  *       - Books
