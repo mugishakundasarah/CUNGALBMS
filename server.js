@@ -42,7 +42,7 @@ const options = {
             },
         },
     },
-    apis : ["./routes/**/*.js", "./models/**/*.js"],
+    apis : ["./routes/**/*.js", "./models/**/*.js", "./routes/**/**/*.js", "./models/**/**/*.js"],
 }
 
 const swaggerOptions = swaggerJsDoc(options)
@@ -61,11 +61,11 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/students", studentRoutes)
 app.use("/api/staff", staffRoutes)
 app.use('/docs', (req, res)=>{
-    res.send('Our document section 🤩😌');
+    res.send('Our document section');
 });
 app.use('/api/docType', docTypeRoutes)
 app.use('/api/notes', noteRoutes)
-app.use('/api/books/', bookRoutes)
+app.use('/api/books', bookRoutes)
 
 mongoConnect()
 app.listen(PORT, (err) => {

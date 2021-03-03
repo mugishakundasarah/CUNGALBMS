@@ -7,8 +7,9 @@ exports.postNote = async (req, res) => {
     try {
         const {title, date, body} = req.body
         const {id} = req.params
-    const validNote = notesValidate(req.body)
-    if(validNote){
+    const {error, validNote} = notesValidate(req.body)
+    if(error)res.send(formatResult({status:400, message:" ", data:error.message}))
+    else if(validNote){
         const note = await new notesModel(req.body)
         // const status = "draft" || "saved"
        
@@ -67,14 +68,14 @@ exports.updateNote = async(req, res)=>{
         const id = req.params.id
         const validId = validateObjectid(id)
         if(validId){    
-            const foundNote = notesModel.findById({_id:id})
+            const foundNote = await notesModel.findById({_id:validId})
             if(foundNote){
-                var noteToUpdate = notesModel.findByIdAndUpdate({_id:id}, req.body, {new:true})
+                var noteToUpdate = await notesModel.findByIdAndUpdate({_id:id}, req.body, {new:true})
                 noteToUpdate = {
-                    title:title,
+                    title:req.body.title,
                     body:body,
                     date:`Last updated on ${Date()}`
-                }.save()
+                }.save();
                 return res.send(formatResult({status:302, message:"Successfully updated", data:noteToUpdate}))
             }
         }
@@ -91,8 +92,8 @@ exports.deleteNote = async(req, res)=>{
     const id = req.params.id
     const validId = validateObjectid(id)
     if(validId){
-      notesModel.findOneAndDelete({
-        _id:id
+      await notesModel.findOneAndDelete({
+        _id:validId
      })
      return res.send(formatResult({status:200, message:"Note removed"}))
     }
