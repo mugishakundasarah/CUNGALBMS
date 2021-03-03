@@ -3,47 +3,45 @@ const { postBooks, getAllBooks, updateBook, deleteBook } = require('../../../con
 const router = require('express').Router()
 router.route('/')
 /**
-     * @swagger
-     * /books/:
-     *   post:
-     *     tags:
-     *       - Books
-     *     description: Add books
-     *     parameters:
-     *       - name: body
-     *         description: Entries for books
-     *         in: body
-     *         required: true
-     *         schema: 
-     *           type: object
-     *           properties: 
-     *             title: 
-     *               type: string
-     *             total:
-     *               type: string
-     *               description: Total of the same title 
-     *             unitPrice:
-     *               type: string
-     *               description: One book's cost of its type
-     *             publisher: 
-     *               type: string
-     *               description: The book's publishing agency
-     *             publishingDate:
-     *              type: Date()
-     *              description:  If known,the date of the book's publication
-     *             category_id:
-     *              type:mongoose.Schema.Types.objectId
-     *              ref:"docTypeSchema"
-     *              description: In identifier of its type
-     *             status:
-     *              type:string
-     *              default: 'Kept'
-     *              enum:['Kept', 'At risk', 'Lost']
-     *              description: What the book's status is in a library
-     *     responses:
-     *       200:
-     *         description: OK
-     */
+ * /books/:
+ * @swagger
+ *   post:
+ *     tags:
+ *       - Books
+ *     description: Add books
+ *     parameters:
+ *       - name: body
+ *         description: Entries for books
+ *         in: body
+ *         required: true
+ *         schema: 
+ *           type: object
+ *           properties: 
+ *             title: 
+ *               type: string
+ *               description:Book's title
+ *             total:
+ *               type: string
+ *               description: Total of the same title 
+ *             unitPrice:
+ *               type: string
+ *               description: One book's cost of its type
+ *             publisher: 
+ *               type: string
+ *               description: The book's publishing agency
+ *             publishingDate:
+ *              type: Date
+ *              description:  If known,the date of the book's publication
+ *             category_id:
+ *              type:mongoose.Schema.Types.objectId
+ *              description: In identifier of its type
+ *             status:
+ *              type:string
+ *              description: What the book's status is in a library("Kept","At risk","Lost")
+ *     responses:
+ *       200:
+ *         description: OK
+ */
 .post(postBooks)
 
 /**
