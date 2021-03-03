@@ -71,8 +71,6 @@ module.exports.login = async(req, res) => {
     try {
        const {email, password} = req.body
        const findUser = await AdminSchema.findOne({email: email})
-       if(!findUser)
-            return res.send(formatResult({data: 'did not find user', status: 404}))
        
        const passwordConfirmation = await bcrypt.compare(password, findUser.password)
         if(!passwordConfirmation)
@@ -85,10 +83,10 @@ module.exports.login = async(req, res) => {
 
         req.headers.authorization = Token
         
-        return res.send(formatResult({
+        return res.send({
             message: "Auth successful",
             data: addToken
-        }))
+        })
     }catch(err) {
             return res.send(err)
     }
@@ -167,10 +165,7 @@ module.exports.getAccount = async (req,res ) => {
             page: req.body.page || 1,
             limit: req.body.limit || 10
         }
-        const results = await AdminSchema.find()
-        
-        // const results = await AdminSchema.paginate({}, options)
-        console.log(results)
+        const results = await AdminSchema.paginate({}, options)
         return res.send(results)
      } catch (error) {
          return res.send(formatResult({status: 500, message: error}))

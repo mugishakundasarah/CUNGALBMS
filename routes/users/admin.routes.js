@@ -37,7 +37,7 @@ adminRoutes.route("/")
 .post(createAdmin)
 /**
  * @swagger
- * /admin/account:
+ * /admin/:
  *   get: 
  *     tags:
  *       - Admin
