@@ -19,7 +19,7 @@ router.route('/')
  *           properties: 
  *             title: 
  *               type: string
- *               description:Book's title
+ *               description: Book's title
  *             total:
  *               type: string
  *               description: Total of the same title 
@@ -33,10 +33,10 @@ router.route('/')
  *              type: Date
  *              description:  If known,the date of the book's publication
  *             category_id:
- *              type:mongoose.Schema.Types.objectId
+ *              type: mongoose.Schema.Types.objectId
  *              description: In identifier of its type
  *             status:
- *              type:string
+ *              type: 'String'
  *              description: What the book's status is in a library("Kept","At risk","Lost")
  *     responses:
  *       200:
