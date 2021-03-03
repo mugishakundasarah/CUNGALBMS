@@ -32,7 +32,7 @@ const bookModel = new mongoose.Schema({
         required: true
     },
     status:{
-        type:'String',
+        type:String,
         required:true,
         default:'Kept',
         enum:['Kept', 'At risk', 'Lost']
