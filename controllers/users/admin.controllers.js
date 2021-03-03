@@ -96,8 +96,7 @@ module.exports.login = async(req, res) => {
 
 module.exports.uploadProfile = async(req, res) => {
     try {
-        const id = req.params.id
-        if(!validateObjectId(id))
+        if(!validateObjectId(req.params.id))
             return res.send(formatResult({message: "please enter a valid object id "}))
         
         if(typeof req.file == 'undefined')
@@ -120,13 +119,13 @@ module.exports.updateAccount = async(req, res) => {
         if(error) return res.send(formatResult({status: 500, message: error.details[0].message}))
            
         
-        const {email, password} = req.body
+        let {email, password} = req.body
 
         email = req.body.email.toUpperCase()
 
         const duplicate = await AdminSchema.findOne({
             _id: {
-                $ne: id
+                $ne: req.params.id 
             },
             email: email
         })
@@ -135,27 +134,27 @@ module.exports.updateAccount = async(req, res) => {
         
         
         const result = 
-            await User.findByIdAndUpdate(id, {
+            await AdminSchema.findByIdAndUpdate(req.params.id, {
                 email: email
             })
 
-        res.send(formatResult({status: 200, message: "UPDATED", data: result}))
+        return res.send(formatResult({status: 200, message: "UPDATED", data: result}))
         } catch (error) {
-            res.send(formatResult({status: 500,message: error}))   
+            return res.send(formatResult({status: 500,message: error}))   
         }
 }
 
 module.exports.deleteAccount = async(req,res) => {
     try {
         // check if the id is in the db
-        if (!validateObjectId(req.params.id))
-        
+        if (!validateObjectId(req.params.id)){
             return res.send(formatResult({ status: 400, message: 'invalid id' }))
+        }      
 
         // delete user if found
-        const result = await AdminSchema.findOneAndDelete({ _id: req.params.id })
+        const result = await AdminSchema.findByIdAndDelete(req.params.id)
         if (!result)
-            if (!reader) return res.send(formatResult({ status: 404, message: 'reader not yet created' }));
+            return res.send(formatResult({ status: 404, message: 'admin not yet created' }));
         
         return res.send(formatResult({ status: 200, message: 'DELETED' }));
     } catch (error) {
@@ -168,7 +167,9 @@ module.exports.getAccount = async (req,res ) => {
             page: req.body.page || 1,
             limit: req.body.limit || 10
         }
-        const results = await AdminSchema.paginate({}, options)
+        const results = await AdminSchema.find()
+        
+        // const results = await AdminSchema.paginate({}, options)
         console.log(results)
         return res.send(results)
      } catch (error) {
