@@ -53,7 +53,6 @@ exports.getAllBooks = async (req, res)=>{
         if(result) res.send(formatResult({ status: 200, data: result }))
         else{
             res.send(formatResult({ status: 404, message: "No books created yet" }))
-            this.postBooks();
         }
         
     } catch (err) {

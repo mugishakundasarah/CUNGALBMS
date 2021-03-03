@@ -52,7 +52,7 @@ router.route('/')
  *   get: 
  *     tags:
  *       - Books
- *     description: get books from the database
+ *     description: Get books from the database
  *     parameters:
  *       - name: page
  *         description: page number
