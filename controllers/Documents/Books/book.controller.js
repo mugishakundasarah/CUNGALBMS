@@ -17,8 +17,8 @@ exports.postBooks = async (req, res) => {
         if (duplicate)
             return res.send(formatResult({ status: 400, message: "Book already recorded", data: duplicate }))
         const newBook = new bookSchema(req.body);
-        await newBook.save();
-        return res.send(formatResult({ status: 301, message: "Book was successfully added", data: newBook }))
+        const result = await newBook.save();
+        return res.send(formatResult({ status: 301, message: "Book was successfully added", data: result }))
 
     } catch (err) {
        return res.send(formatResult({ status: 400, message:"Error occured", data: err}))
