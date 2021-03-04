@@ -74,6 +74,8 @@ router.route('/:id')
 *     tags:
 *       - Books
 *     description: update books credentials
+*       security: 
+ *       - bearerAuth: -[]
 *     parameters:
 *       - name: id
 *         description: book id
