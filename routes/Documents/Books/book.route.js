@@ -81,7 +81,7 @@ router.route('/:id')
 *         required: true
 *         type: string
 *       - name: body
-*         description: Entries for books
+*         description: Updates for books
 *         in: body
 *         required: true
 *         schema: 
@@ -110,7 +110,7 @@ router.route('/:id')
  *             responses:
  *              200:
  *              description: OK
- * /
+ */
 .put(updateBook)
 
 /**
