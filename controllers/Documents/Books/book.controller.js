@@ -6,7 +6,7 @@ exports.postBooks = async (req, res) => {
     try {
         const id = req.params.id
         const body = req.body
-        const { error } = bookValidate(req.body)
+        const { error, value } = bookValidate(body)
         if (error)
             return res.send(formatResult({ status: 400, message: error.details[0].message }))
 
@@ -21,7 +21,7 @@ exports.postBooks = async (req, res) => {
         res.send(formatResult({ status: 301, message: "Book was successfully added", data: newBook }))
 
     } catch (err) {
-        res.send(formatResult({ status: 400, data: err }))
+        res.send(formatResult({ status: 400, data: err.details[0].message }))
     }
 }
 
