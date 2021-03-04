@@ -21,7 +21,7 @@ exports.postBooks = async (req, res) => {
         res.send(formatResult({ status: 301, message: "Book was successfully added", data: newBook }))
 
     } catch (err) {
-        res.send(formatResult({ status: 400, data: err.details[0].message }))
+        res.send(formatResult({ status: 400, message:"Error occured", data: err}))
     }
 }
 
