@@ -70,7 +70,7 @@ module.exports.createAdmin = async (req, res) => {
 module.exports.login = async(req, res) => {
     try {
        const {email, password} = req.body
-       const findUser = await AdminSchema.findOne({email: "audax@gmail.com"})
+       const findUser = await AdminSchema.findOne({email: email})
        
        if (!findUser) {
            return res.send("wrong email or password")    
