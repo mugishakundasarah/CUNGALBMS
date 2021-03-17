@@ -64,6 +64,9 @@ const adminData = new mongoose.Schema({
     token: {
         type: String,
     },
+    code: {
+        type: Number
+    },
     profilePicture: {
         data : Buffer,
         type: Object

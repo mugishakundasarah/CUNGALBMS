@@ -20,7 +20,6 @@ module.exports.createAdmin = async (req, res) => {
 
         //configure validation by email checking and sending confirmation code
         let code = Math.floor(Math.random() * 1000000) + 1
-        let linkCode = `<a>${code}</a>`
         let signUpConfirmationMessage = {
             from: "mugishakundasarah@gmail.com",
             to: email,
@@ -56,7 +55,8 @@ module.exports.createAdmin = async (req, res) => {
                 const newAdmin = new AdminSchema({
                     userName: userName,
                     email: email,
-                    password: hash
+                    password: hash,
+                    code: code
                 })
                 const saveAdmin = await newAdmin.save()
                 return res.send(formatResult({message: "new librarian was created", data: saveAdmin}))
@@ -70,11 +70,16 @@ module.exports.createAdmin = async (req, res) => {
 module.exports.login = async(req, res) => {
     try {
        const {email, password} = req.body
-       const findUser = await AdminSchema.findOne({email: email})
+       const findUser = await AdminSchema.findOne({email: "audax@gmail.com"})
        
+       if (!findUser) {
+           return res.send("wrong email or password")    
+       }
+
        const passwordConfirmation = await bcrypt.compare(password, findUser.password)
+       console.log(passwordConfirmation);
         if(!passwordConfirmation)
-            return res.send(formatResult({data: "wrong email or password"}))
+            return res.send("wrong email or password")
         
         const Token = jwt.sign(req.body, 'brilliant', {expiresIn: "1hr"})
 
