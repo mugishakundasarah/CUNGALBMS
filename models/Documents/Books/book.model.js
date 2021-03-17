@@ -14,7 +14,7 @@ const bookModel = new mongoose.Schema({
     }, 
     dateOfRecipient:{
         type: Date,
-        required:false
+        required:true
      },
      unitPrice:{
         type: String
@@ -32,7 +32,7 @@ const bookModel = new mongoose.Schema({
         required: true
     },
     status:{
-        type:'String',
+        type:String,
         required:true,
         default:'Kept',
         enum:['Kept', 'At risk', 'Lost']

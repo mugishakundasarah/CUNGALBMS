@@ -60,7 +60,7 @@ app.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerOptions))
 app.use("/api/admin", adminRoutes);
 app.use("/api/students", studentRoutes)
 app.use("/api/staff", staffRoutes)
-app.use('/docs', (req, res)=>{
+app.use('/api/docs', (req, res)=>{
     res.send('Our document section');
 });
 app.use('/api/docType', docTypeRoutes)
