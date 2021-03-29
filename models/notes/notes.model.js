@@ -24,7 +24,7 @@ exports.notesValidate = (note)=>{
     const notes = joi.object({
         title:joi.string(),
         body:joi.string().required(),
-        status:joi.valid("DRAFT","SAVED")
+        status:joi.string().valid("DRAFT","SAVED")
     })
     return notes.validate(note)
 }
