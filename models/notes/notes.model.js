@@ -15,9 +15,9 @@ const notesSchema = new mongoose.Schema({
         type: String,
         default: 'DRAFT',
         enum:['DRAFT','SAVED']
-    },
-    timestamps:{createdAt:'Note created at', updatedAt:'Note updated at'}
-}).plugin(paginate);
+    }
+}, {timestamps:true}
+).plugin(paginate);
 
 exports.notesModel = mongoose.model("notesSchema", notesSchema);
 exports.notesValidate = (note)=>{
