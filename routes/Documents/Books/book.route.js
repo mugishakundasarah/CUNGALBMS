@@ -29,15 +29,12 @@ router.route('/')
  *             publisher: 
  *               type: string
  *               description: The book's publishing agency
- *             publishingDate:
- *              type: Date
- *              description:  If known,the date of the book's publication
  *             category_id:
  *              type: mongoose.Schema.Types.objectId
  *              description: In identifier of its type
  *             status:
  *              type: 'String'
- *              description: What the book's status is in a library("Kept","At risk","Lost")
+ *              description: A book's status in the library("Kept","At risk","Lost")
  *     responses:
  *       200:
  *         description: OK
