@@ -30,10 +30,10 @@ router.route('/')
  *               type: string
  *               description: The book's publishing agency
  *             category_id:
- *              type: mongoose.Schema.Types.objectId
+ *              type: Schema.Types.objectId
  *              description: In identifier of its type
  *             status:
- *              type: 'String'
+ *              type: String
  *              description: A book's status in the library("Kept","At risk","Lost")
  *     responses:
  *       200:
