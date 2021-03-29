@@ -20,14 +20,11 @@ router.route('/')
  *             title: 
  *               type: string
  *               description: Note's title
- *             date:
- *               type: date
- *               description: Date of creation/update
  *             body:
  *               type: string
  *               description: The note's body
  *             status:
- *              type: String
+ *              type: string
  *              description: Note's status (saved/draft)
  *     responses:
  *       200:
