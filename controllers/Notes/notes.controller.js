@@ -17,13 +17,13 @@ exports.postNote = async (req, res) => {
             }, body:body
         })
         if(duplicate){
-            res.send(formatResult({status:403, message:"A similar note has already been saved"}))
+            return res.send(formatResult({status:403, message:"A similar note has already been saved"}))
         } 
         else{
             if(validNote){
                 const note = await new notesModel(req.body)
                 const saveNote = await note.save();
-                res.send(formatResult({status:201, message:"CREATED", data:saveNote}));
+                return res.send(formatResult({status:201, message:"CREATED", data:saveNote}));
             }
             return res.send(formatResult({status:400, message:"Invalid note"}))
         }
@@ -100,7 +100,7 @@ exports.deleteNote = async(req, res)=>{
         return res.send(formatResult({status:401, message:"Couldn't delete: No such note"}))
     }
    } catch (err) {
-       return console.log(err.toString())
+       console.log(err.toString())
    }
 
 }
