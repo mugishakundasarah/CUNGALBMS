@@ -9,9 +9,20 @@ module.exports.createAdmin = async (req, res) => {
         const {userName, email, password} = req.body;
 
         const {error} = validateAdmin.validate(req.body, {abortEarly: false})
-         
-        if(error)
-            return res.send(formatResult({status: 400, message: error.details[0].message}))   
+
+        if(error){
+            if(error.details[0].path[0].includes("password")){
+                if(password.length < 8){
+                    return res.send("password must be atleast 8 characters");
+                }
+                else{
+                    return res.send("the password must contain special characters and uppercase letters");
+                }
+            }
+            else{
+                return res.send(formatResult({status: 400, message: error.details[0].message}))   
+            }
+        }
         
         // check if there is a duplicate 
         const duplicate = await AdminSchema.findOne({email: email})
@@ -20,7 +31,6 @@ module.exports.createAdmin = async (req, res) => {
 
         //configure validation by email checking and sending confirmation code
         let code = Math.floor(Math.random() * 1000000) + 1
-        let linkCode = `<a>${code}</a>`
         let signUpConfirmationMessage = {
             from: "mugishakundasarah@gmail.com",
             to: email,
@@ -46,24 +56,22 @@ module.exports.createAdmin = async (req, res) => {
         transporter.sendMail(signUpConfirmationMessage, async(err, result) => {
             if (err) 
                 res.send(formatResult({message: err}))
-            console.log(result)
             res.send("confirmation email sent")
 
             await bcrypt.hash(password, 10, async(err, hash) => {
-                if(err)
-                  return res.send(formatResult({message: err, status: 401}))
-
                 const newAdmin = new AdminSchema({
                     userName: userName,
                     email: email,
-                    password: hash
+                    password: hash,
+                    code: code
                 })
-                const saveAdmin = await newAdmin.save()
-                return res.send(formatResult({message: "new librarian was created", data: saveAdmin}))
+                await newAdmin.save()
+                return res.send("new librarian was created");
             })
         })
     } catch (error) {
-        return res.send(formatResult({message: "failed to create admin", data: error.toString()}))
+        console.log(error); 
+        return res.send({message: "failed to create admin", data: error})
     }  
 }
 
@@ -72,9 +80,14 @@ module.exports.login = async(req, res) => {
        const {email, password} = req.body
        const findUser = await AdminSchema.findOne({email: email})
        
+       if (!findUser) {
+           return res.send("wrong email or password")    
+       }
+
        const passwordConfirmation = await bcrypt.compare(password, findUser.password)
+       console.log(passwordConfirmation);
         if(!passwordConfirmation)
-            return res.send(formatResult({data: "wrong email or password"}))
+            return res.send("wrong email or password")
         
         const Token = jwt.sign(req.body, 'brilliant', {expiresIn: "1hr"})
 
