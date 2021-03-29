@@ -8,10 +8,10 @@ exports.addStudent = async (req, res) => {
         if(error)
             return res.send(formatResult({status: 400, message: error.details[0].message}))   
 
-       const {firstName, lastName, gender, Class} = req.body
+       const {name, id,gender, Class} = req.body
 
         // check if the student exits in db
-        const duplicate = await studentsSchema.findOne({firstName: firstName.toUpperCase(), lastName: lastName.toUpperCase(), gender:gender.toUpperCase(), Class: Class.toUpperCase()})
+        const duplicate = await studentsSchema.findOne({name: name.toUpperCase(), id, gender:gender.toUpperCase(), Class: Class.toUpperCase()})
          if(duplicate)
              return res.send(formatResult({message: "student already registered"}))        
         

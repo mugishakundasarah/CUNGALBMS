@@ -53,25 +53,21 @@ module.exports.createAdmin = async (req, res) => {
         transporter.sendMail(signUpConfirmationMessage, async(err, result) => {
             if (err) 
                 res.send(formatResult({message: err}))
-            console.log(result)
             res.send("confirmation email sent")
 
             await bcrypt.hash(password, 10, async(err, hash) => {
-                if(err)
-                  return res.send(formatResult({message: err, status: 401}))
-
                 const newAdmin = new AdminSchema({
                     userName: userName,
                     email: email,
                     password: hash,
                     code: code
                 })
-                const saveAdmin = await newAdmin.save()
-                return res.send(formatResult({message: "new librarian was created", data: saveAdmin}))
+                await newAdmin.save()
+                return res.send("new librarian was created");
             })
         })
     } catch (error) {
-        return res.send(formatResult({message: "failed to create admin", data: error.toString()}))
+        return res.send({message: "failed to create admin", data: error})
     }  
 }
 
