@@ -4,7 +4,7 @@ const router = express.Router()
 router.route('/')
 /**
  * @swagger
- * /api/notes:
+ * /notes/:
  *   post:
  *     tags:
  *       - Notes
