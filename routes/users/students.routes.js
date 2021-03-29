@@ -18,12 +18,12 @@ studentRoutes.route('/')
      *         schema:
      *           type: object
      *           properties: 
-     *             firstName:
+     *             name:
      *               type: string
-     *               description: student's first name 
-     *             lastName:
+     *               description: student's name 
+     *             code:
      *               type: string
-     *               description: student's last name 
+     *               description: student's code 
      *             gender:
      *               type: string
      *               description: student's gender("female, male")
@@ -79,12 +79,12 @@ studentRoutes.route('/:id')
 *         schema: 
 *           type: object
 *           properties: 
-*             firstName:
+*             name:
 *               type: string
-*               description: student's first name 
-*             lastName:
+*               description: student's name 
+*             code:
 *               type: string
-*               description: student's last name 
+*               description: student's code
 *             gender:
 *               type: string
 *               description: student's gender("female, male")
