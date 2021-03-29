@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const paginate = require('mongoose-paginate-v2');
 const Joi = require('joi');
-const docTypeSchemaModel = require('../../document_types/docType.model')
+const docTypeSchemaModel = require('../../document_types/docType.model');
+const category = require('./../../Categories/category.model')
 
 const bookModel = new mongoose.Schema({
     title:{
@@ -23,10 +24,7 @@ const bookModel = new mongoose.Schema({
          type: String,
          required: true
      },
-    publishingDate:{
-        type: Date
-    },
-    category_id: {
+    docType_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "docTypeSchema",
         required: true
@@ -36,6 +34,16 @@ const bookModel = new mongoose.Schema({
         required:true,
         default:'Kept',
         enum:['Kept', 'At risk', 'Lost']
+    },
+    //Cover photo(requiring multer)
+    details:{
+        type:String,
+        required:false
+    },
+    category:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'category',
+        required:true
     }
 }).plugin(paginate)
 
@@ -49,7 +57,8 @@ exports.bookValidate = (book)=>{
         publisher:Joi.string(),
         publishingDate:Joi.date(),
         category_id:Joi.string().required(),
-        status:Joi.string().required().valid('Kept','At risk', 'Lost')
+        status:Joi.string().required().valid('Kept','At risk', 'Lost'),
+        details:Joi.string().max(400)
     })
     return books.validate(book);
 }
