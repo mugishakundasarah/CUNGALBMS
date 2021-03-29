@@ -21,7 +21,7 @@ exports.postNote = async (req, res) => {
         } 
         else{
             if(validNote){
-                const note = await new notesModel(req.body)
+                const note = new notesModel(req.body)
                 const saveNote = await note.save();
                 return res.send(formatResult({status:201, message:"CREATED", data:saveNote}));
             }
@@ -45,7 +45,7 @@ exports.postNote = async (req, res) => {
 exports.getNotes = async(req, res)=>{
     try {
         const result = await notesModel.find()
-        if(result){res.send(formatResult({status:200, data:result}))}
+        if(result){return res.send(formatResult({status:200, data:result}))}
         else{
     return res.send(formatResult({status:404,message:"No notes yet; create one first."}))
     }

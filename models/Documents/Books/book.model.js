@@ -13,10 +13,6 @@ const bookModel = new mongoose.Schema({
         type: String,
         required:true
     }, 
-    dateOfRecipient:{
-        type: Date,
-        required:true
-     },
      unitPrice:{
         type: String
      },
@@ -45,7 +41,7 @@ const bookModel = new mongoose.Schema({
         ref:'category',
         required:true
     }
-}).plugin(paginate)
+}, {timestamps:true}).plugin(paginate)
 
 exports.bookSchema = mongoose.model("bookModel", bookModel)
 exports.bookValidate = (book)=>{
