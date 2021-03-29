@@ -14,20 +14,21 @@ const bookModel = new mongoose.Schema({
         required:true
     }, 
      unitPrice:{
-        type: String
+        type: String,
+        required:true
      },
      publisher: {
          type: String,
          required: true
      },
     docType_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "docTypeSchema",
+        type: Schema.Types.ObjectId,
+        ref: 'docTypeSchema',
         required: true
     },
     status:{
-        type:String,
-        required:true,
+        type: String,
+        required: true,
         default:'Kept',
         enum:['Kept', 'At risk', 'Lost']
     },
@@ -38,7 +39,7 @@ const bookModel = new mongoose.Schema({
     },
     category:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'category',
+        ref:"category",
         required:true
     }
 }, {timestamps:true}).plugin(paginate)
@@ -48,10 +49,8 @@ exports.bookValidate = (book)=>{
     const books = Joi.object({
         title:Joi.string().required(),
         total:Joi.number().required(),
-        dateOfRecipient: Joi.date(),
         unitPrice:Joi.string(),
         publisher:Joi.string(),
-        publishingDate:Joi.date(),
         category_id:Joi.string().required(),
         status:Joi.string().required().valid('Kept','At risk', 'Lost'),
         details:Joi.string().max(400)
