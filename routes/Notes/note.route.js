@@ -4,14 +4,14 @@ const router = express.Router()
 router.route('/')
 /**
  * @swagger
- * /books/:
+ * /api/notes:
  *   post:
  *     tags:
- *       - Books
- *     description: Add books
+ *       - Notes
+ *     description: Add notes
  *     parameters:
  *       - name: body
- *         description: Entries for books
+ *         description: New note
  *         in: body
  *         required: true
  *         schema: 
@@ -19,7 +19,7 @@ router.route('/')
  *           properties: 
  *             title: 
  *               type: string
- *               description: Book's title
+ *               description: Note's title
  *             date:
  *               type: date
  *               description: Date of creation/update
