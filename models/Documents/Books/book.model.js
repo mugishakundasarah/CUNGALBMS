@@ -22,13 +22,13 @@ const bookModel = new mongoose.Schema({
          required: true
      },
     docType_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "docTypeSchema",
+        type: Schema.Types.ObjectId,
+        ref: 'docTypeSchema',
         required: true
     },
     status:{
-        type:String,
-        required:true,
+        type: String,
+        required: true,
         default:'Kept',
         enum:['Kept', 'At risk', 'Lost']
     },

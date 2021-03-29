@@ -6,10 +6,10 @@ const docTypeSchema = new mongoose.Schema({
     name:{
         type:'String',
         required:true,
-        doc_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "bookModel"
-        },
+        docType_id: [{
+            type: Schema.Types.ObjectId,
+            ref: 'bookModel'
+        }],
         default:'Books',
         enum:['Books', 'Magazines', 'Newspapers']
     }
