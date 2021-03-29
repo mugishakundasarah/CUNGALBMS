@@ -11,7 +11,7 @@ module.exports.createSchool = async(req, res) => {
         if(error){
             return res.send(formatResult({message: error}))
         }
-        const duplicate = School.findOne({schoolName, status})
+        const duplicate = await School.findOne({schoolName})
         if(duplicate) {
             return res.send(formatResult({message: "school already exists"}))
         }
