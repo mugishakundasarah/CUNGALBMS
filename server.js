@@ -18,7 +18,8 @@ const PORT = process.env.PORT || 5000
 // process.env.NODE_ENV = 'PRODUCTION' ? process.env.PROD_HOST: `localhost:${PORT}`
 
 const host = process.env.NODE_ENV === "production" ? process.env.PROD_HOST : `localhost:${PORT}`
-const cors = require("cors")
+const cors = require("cors");
+const { schoolRoutes } = require('./routes/school/school.routes');
 
 app.use(cors())
 
@@ -57,6 +58,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerOptions))
+app.use("/api/admin/school", schoolRoutes)
 app.use("/api/admin", adminRoutes);
 app.use("/api/students", studentRoutes)
 app.use("/api/staff", staffRoutes)

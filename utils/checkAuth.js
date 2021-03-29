@@ -13,3 +13,10 @@ module.exports.verifyToken = (req, res, next) => {
     }
 }
 
+module.exports.superAdmin = (req, res, next) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}

@@ -1,8 +1,29 @@
 const nodeMailer = require("nodemailer")
 const bcrypt = require("bcryptjs");
-const {validateAdmin, AdminSchema} = require("../../models/users/users.model");
+const {validateAdmin, AdminSchema } = require("../../models/users/users.model");
 const { formatResult, validateObjectId } = require("../../utils/import");
 const jwt = require('jsonwebtoken')
+
+module.exports.checkSuperAdmin = async(req, res, next) => {
+    const {adminName} = req.body; 
+
+    const arr = ['grace', 'souvenir', 'nick', 'seth', 'sarah']
+    const result = 0
+
+    for (let i = 0; i < arr.length; i++) {
+        if(adminName == arr[i]){
+            result = 1;
+        }
+    }
+
+    if(result) {
+        req.user.superAdmin = true;
+    }
+    else{
+        req.user.superAdmin = false;
+    }
+    next();
+}
 
 module.exports.createAdmin = async (req, res) => {
     try {
