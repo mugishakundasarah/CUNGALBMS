@@ -22,9 +22,8 @@ const notesSchema = new mongoose.Schema({
 exports.notesModel = mongoose.model("notesSchema", notesSchema);
 exports.notesValidate = (note)=>{
     const notes = joi.object({
-        title:joi.string().required(),
+        title:joi.string(),
         body:joi.string().required(),
-        date:joi.date(),
         status:joi.valid("DRAFT","SAVED")
     })
     return notes.validate(note)
