@@ -9,17 +9,20 @@ module.exports.createAdmin = async (req, res) => {
         const {userName, email, password} = req.body;
 
         const {error} = validateAdmin.validate(req.body, {abortEarly: false})
-        if(error.details[0].path[0].includes("password")){
-            if(password.length < 8){
-                return res.send("password must be atleast 8 characters");
+
+        if(error){
+            if(error.details[0].path[0].includes("password")){
+                if(password.length < 8){
+                    return res.send("password must be atleast 8 characters");
+                }
+                else{
+                    return res.send("the password must contain special characters and uppercase letters");
+                }
             }
             else{
-                return res.send("the password must contain special characters and uppercase letters");
+                return res.send(formatResult({status: 400, message: error.details[0].message}))   
             }
         }
-
-        if(error)
-            return res.send(formatResult({status: 400, message: error.details[0].message}))   
         
         // check if there is a duplicate 
         const duplicate = await AdminSchema.findOne({email: email})
@@ -67,6 +70,7 @@ module.exports.createAdmin = async (req, res) => {
             })
         })
     } catch (error) {
+        console.log(error); 
         return res.send({message: "failed to create admin", data: error})
     }  
 }
