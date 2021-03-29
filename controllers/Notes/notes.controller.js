@@ -9,7 +9,6 @@ exports.postNote = async (req, res) => {
     const {error, validNote} = await notesValidate(req.body)
     if(error)res.send(formatResult({status:400, message:" ", data:error.message}))
     else{
-        if(validNote){
         // const status = "draft" || "saved"
        
         const duplicate = await notesModel.findOne({
@@ -21,12 +20,12 @@ exports.postNote = async (req, res) => {
             res.send(formatResult({status:403, message:"A similar note has already been saved"}))
         } 
         else{
-        validNote = await notesValidate(req.body)
             if(validNote){
                 const note = await new notesModel(req.body)
                 const saveNote = await note.save();
                 res.send(formatResult({status:201, message:"CREATED", data:saveNote}));
             }
+            return res.send(formatResult({status:400, message:"Invalid note"}))
         }
         // if(!saveNote){
         //     status=="draft"
@@ -35,11 +34,7 @@ exports.postNote = async (req, res) => {
         //     res.send(formatResult({message:"Saved as draft"}));
         //     }
         //     else{}
-        // }
-     }
-    else{
-        return res.send("Couldn't create note: Invalid note")
-}
+        // 
 }
     } catch (err) {
         console.log(err.toString())
