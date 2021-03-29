@@ -6,7 +6,7 @@ exports.postNote = async (req, res) => {
     try {
         const {title, date, body} = req.body
         const {id} = req.params
-    const {error, validNote} = notesValidate(req.body)
+    const {error, validNote} = await notesValidate(req.body)
     if(error)res.send(formatResult({status:400, message:" ", data:error.message}))
     else{
         if(validNote){
@@ -21,9 +21,12 @@ exports.postNote = async (req, res) => {
             res.send(formatResult({status:403, message:"A similar note has already been saved"}))
         } 
         else{
-        const note = await new notesModel(req.body)
-        const saveNote = await note.save();
-        res.send(formatResult({status:201, message:"CREATED", data:saveNote}));
+        validNote = await notesValidate(req.body)
+            if(validNote){
+                const note = await new notesModel(req.body)
+                const saveNote = await note.save();
+                res.send(formatResult({status:201, message:"CREATED", data:saveNote}));
+            }
         }
         // if(!saveNote){
         //     status=="draft"
