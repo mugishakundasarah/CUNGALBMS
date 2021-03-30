@@ -1,4 +1,5 @@
 const { postBooks, getAllBooks, updateBook, deleteBook } = require('../../../controllers/Documents/Books/book.controller')
+const {Schema} = require('mongoose');
 
 const router = require('express').Router()
 router.route('/')
@@ -33,7 +34,7 @@ router.route('/')
  *              type: Schema.Types.objectId
  *              description: In identifier of its type
  *             status:
- *              type: String
+ *              type: string
  *              description: A book's status in the library("Kept","At risk","Lost")
  *     responses:
  *       200:
