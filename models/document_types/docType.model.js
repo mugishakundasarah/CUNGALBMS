@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {Schema} = require('mongoose');
 const paginate = require('mongoose-paginate-v2');
 const joi = require('joi');
 
