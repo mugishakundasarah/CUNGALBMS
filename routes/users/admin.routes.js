@@ -1,7 +1,11 @@
 const express = require("express")
-const { createAdmin, login, updateAccount,deleteAccount, getAccount } = require("../../controllers/users/admin.controllers")
+const multer = require('multer')
+const { createAdmin, login, updateAccount,deleteAccount, getAccount, uploadProfile } = require("../../controllers/users/admin.controllers")
 const { verifyToken } = require("../../utils/checkAuth")
+const { imageFilter } = require("../../utils/imageFilter")
+const { storage } = require("../../utils/storage")
 const adminRoutes = express.Router()
+let upload = multer({ storage: storage, fileFilter: imageFilter });
 adminRoutes.route("/")
  /**
   * @swagger
@@ -150,5 +154,30 @@ adminRoutes.route('/:id')
   * 
   */
 .put(verifyToken,updateAccount)
+adminRoutes.route("/profile")
+ /**
+  * @swagger
+  * /admin/profile:
+  *   post:
+  *     tags:
+  *       - Admin
+  *     description: upload school logo
+  *     consumes: 
+  *       - multipart/form-data
+  *     parameters: 
+  *       - in: formData
+  *         name: SchoolLogo
+  *         type: file
+  *     produces:
+  *        - text/plain
+  *     responses:
+  *       200:   
+  *         description: librarian added
+  *         content: 
+  *           text/plain:
+  *             schema: 
+  *               type: string
+  */
+.post(upload.single('SchoolLogo'),uploadProfile)
 
 module.exports.adminRoutes = adminRoutes

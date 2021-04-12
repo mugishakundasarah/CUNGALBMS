@@ -21,14 +21,9 @@ staffRoutes.route('/')
      *           properties: 
      *             email: 
      *               type: string
-     *             firstName:
+     *             name:
      *               type: string
-     *               description: staff's first name 
-     *             lastName:
-     *               type: string
-     *               description: staff's last name 
-     *             duty: 
-     *               type: string
+     *               description: staff's name
      *     responses:
      *       200:
      *         description: OK
@@ -80,14 +75,9 @@ staffRoutes.route('/:id')
 *           properties: 
 *             email: 
 *               type: string
-*             firstName:
+*             name:
 *               type: string
 *               description: staff's first name 
-*             lastName:
-*               type: string
-*               description: staff's last name 
-*             duty: 
-*               type: string
 *     responses:
 *       200:
 *         description: OK

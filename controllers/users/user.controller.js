@@ -8,10 +8,10 @@ exports.addStudent = async (req, res) => {
         if(error)
             return res.send(formatResult({status: 400, message: error.details[0].message}))   
 
-       const {name, id,gender, Class} = req.body
+       const {name,gender, Class} = req.body
 
         // check if the student exits in db
-        const duplicate = await studentsSchema.findOne({name: name.toUpperCase(), id, gender:gender.toUpperCase(), Class: Class.toUpperCase()})
+        const duplicate = await studentsSchema.findOne({name: name.toUpperCase(), gender:gender.toUpperCase(), Class: Class.toUpperCase()})
          if(duplicate)
              return res.send(formatResult({message: "student already registered"}))        
         
@@ -45,13 +45,15 @@ exports.updateStudent = async (req, res) => {
         let {error} = validateStudent.validate(req.body, {abortEarly: false})
         if(error) return res.send(formatResult({status: 500, message: error.details[0].message}))
 
+        const {name,gender, Class} = req.body
+        
         const duplicate = await studentsSchema.findOne({
             _id: {
                 $ne: req.params.id
             },
-            firstName : req.body.firstName,
-            lastName : req.body.lastName,
-            gender: req.body.gender
+            name: name.toUpperCase(), 
+            gender:gender.toUpperCase(), 
+            Class: Class.toUpperCase()
         })
 
         if (duplicate) return res.send(formatResult({ status: 409, message: 'student already in db' }));

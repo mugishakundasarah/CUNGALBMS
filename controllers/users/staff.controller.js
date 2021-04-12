@@ -12,9 +12,7 @@ exports.addStaff = async (req, res) => {
           await staffSchema.findOne(
                 {
                    email: req.body.email.toUpperCase(), 
-                   firstName: req.body.firstName.toUpperCase(), 
-                   lastName: req.body.lastName.toUpperCase(), 
-                   duty: req.body.duty.toUpperCase()
+                   name: req.body.firstName.toUpperCase()
                 }
             )
          if(duplicate)
@@ -53,10 +51,8 @@ exports.updateStaff = async (req, res) => {
                 _id: {
                     $ne: req.params.id 
                 },
-                email: req.body.email.toUpperCase(),
-                duty: req.body.duty.toUpperCase(),
-                lastName: req.body.lastName.toUpperCase(),
-                firstName: req.body.firstName.toUpperCase()
+                email: req.body.email.toUpperCase(), 
+                name: req.body.firstName.toUpperCase()
             })
             if(duplicate)
                 return res.send(formatResult({status: 409, message: "staff member already registered"}))

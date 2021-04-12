@@ -2,7 +2,8 @@ const nodeMailer = require("nodemailer")
 const bcrypt = require("bcryptjs");
 const {validateAdmin, AdminSchema } = require("../../models/users/users.model");
 const { formatResult, validateObjectId } = require("../../utils/import");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const multer = require("multer");
 
 module.exports.checkSuperAdmin = async(req, res, next) => {
     const {adminName} = req.body; 
@@ -128,13 +129,19 @@ module.exports.login = async(req, res) => {
 
 module.exports.uploadProfile = async(req, res) => {
     try {
-        if(!validateObjectId(req.params.id))
-            return res.send(formatResult({message: "please enter a valid object id "}))
-        
-        if(typeof req.file == 'undefined')
-            return res.send(formatResult({message: "please include a file with .jpg or .png"}))
-    
-        const saveProfile = await AdminSchema.findByIdAndUpdate(id, {profilePicture: "profilepicture"})
+         // req.file contains information of uploaded file
+        // req.body contains information of text fields, if there were any
+
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.file) {
+            return res.send('Please select an image to upload');
+        }
+        else if (err instanceof multer.MulterError) {
+            return res.send(err);
+        }
+        const saveProfile = await AdminSchema.findByIdAndUpdate(id, {profilePicture: req.file.fileName})
         return res.send(formatResult({data: saveProfile, message: "added the profile picture"}))    
     } catch (error) {
         console.log(error)

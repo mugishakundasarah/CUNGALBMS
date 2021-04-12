@@ -6,7 +6,6 @@ const paginate = require("mongoose-paginate-v2");
 
 const studentsData = new mongoose.Schema({
     name: {type: String, required: true}, 
-    code : {type: String, required: true},
     gender: {type: String},
     Class: {type: String}
 }, {timestamps : true})
@@ -18,17 +17,14 @@ const studentsSchema = mongoose.model("students",studentsData)
 //configuring joi for user students validation
 const validateStudent = Joi.object().keys({
     name: Joi.string().required(),
-    code: Joi.string().required(),
     gender: Joi.string().valid("male", "female"),
     Class: Joi.string()
 })
 
 
 const staff = new mongoose.Schema({
+    name: {type: String, required: true},
     email : {type: String, required: true},
-    firstName: {type: String, required: true},
-    lastName: {type: String, required: true},
-    duty: {type: String}
 })
 staff.plugin(paginate)
 
@@ -36,10 +32,8 @@ const staffSchema = mongoose.model("Staff",staff);
 
 //configuring joi for user students validation
 const validateStaff = Joi.object().keys({
-    email: Joi.string().email().required(),
-    firstName: Joi.string().required(),
-    lastName : Joi.string().required(),
-    duty: Joi.string()
+    name: Joi.string().required(),
+    email: Joi.string().email().required()
 })
 
 const adminData = new mongoose.Schema({
@@ -69,8 +63,7 @@ const adminData = new mongoose.Schema({
         type: Number
     },
     profilePicture: {
-        data : Buffer,
-        type: Object
+        type: String
     },
     superAdmins: {
         type: Array

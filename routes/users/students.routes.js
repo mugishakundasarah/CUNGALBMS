@@ -21,9 +21,6 @@ studentRoutes.route('/')
      *             name:
      *               type: string
      *               description: student's name 
-     *             code:
-     *               type: string
-     *               description: student's code 
      *             gender:
      *               type: string
      *               description: student's gender("female, male")
@@ -82,9 +79,6 @@ studentRoutes.route('/:id')
 *             name:
 *               type: string
 *               description: student's name 
-*             code:
-*               type: string
-*               description: student's code
 *             gender:
 *               type: string
 *               description: student's gender("female, male")
